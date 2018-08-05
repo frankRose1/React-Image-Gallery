@@ -1,10 +1,10 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-#api key
-/config.js
-
 # dependencies
 /node_modules
+
+#mock design
+starter_files
 
 # testing
 /coverage
