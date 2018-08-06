@@ -4,7 +4,7 @@
 /node_modules
 
 #mock design
-starter_files
+/starter_files
 
 # testing
 /coverage
