@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Layout from './components/Layout/Layout';
-// import apiKey from '../config';
+import Gallery from './components/UI/Gallery';
+import apiKey from './config';
 
 class App extends Component {
 
@@ -14,7 +15,7 @@ class App extends Component {
         <Layout imageGenres={this.state.imageGenres}>
           {/* gallery component will go here
             layout will import the header which will contain the form and nav bar*/}
-            <p>testing testing</p>
+            <Gallery />
         </Layout>
       </div>
     );

@@ -1,7 +1,6 @@
 import React from 'react';
 
-const NavBar = (props) => {
-    return (
+const NavBar = (props) => (
         <nav class="main-nav">
             <ul>
                 {props.imageGenres.map( (genre, i) => (
@@ -11,7 +10,6 @@ const NavBar = (props) => {
                 ))}
             </ul>
         </nav>
-    );
-};
+);
 
 export default NavBar;
