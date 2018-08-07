@@ -1,7 +1,7 @@
 import React from 'react';
 
 const NavBar = (props) => (
-        <nav class="main-nav">
+        <nav className="main-nav">
             <ul>
                 {props.imageGenres.map( (genre, i) => (
                     <li key={i}>
