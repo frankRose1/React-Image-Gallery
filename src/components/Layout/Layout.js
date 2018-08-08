@@ -8,7 +8,7 @@ const Layout = props => (
     <Aux>
         <header>
             <SearchForm /> 
-            <NavBar imageGenres={props.imageGenres} />
+            <NavBar getImagesHandler={props.getImages}/>
         </header>
         <main>
             <Gallery images={props.images}/>

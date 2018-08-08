@@ -14,23 +14,23 @@ class App extends Component {
     isLoading: false
   }
 
-  componentDidMount(){
+  getImages = (genre) => {
     const limit = 24;
-    const tag = 'puppies';
-    axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${tag}&per_page=${limit}&format=json&nojsoncallback=1`)
-      .then(res => {
-        this.setState({
-          images: res.data.photos.photo
-        });
-      })
-      .catch(err => console.log(err));
+    console.log(genre);
+    // axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${genre}&per_page=${limit}&format=json&nojsoncallback=1`)
+    //   .then(res => {
+    //     this.setState({
+    //       images: res.data.photos.photo
+    //     });
+    //   })
+    //   .catch(err => console.log(err));
   }
 
   render() {
     return (
       <div className="container">
           <Switch>
-            <Route exact path="/" render={ () => <Layout images={this.state.images} />} />
+            <Route exact path="/" render={ () => <Layout images={this.state.images} getImages={this.getImages} />} />
             <Route component={NotFound} />
           </Switch>   
       </div>
