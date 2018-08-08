@@ -1,21 +1,19 @@
 import React from 'react';
 import Aux from '../../hoc/Auxiliary';
-import SearchForm from '../UI/SearchForm';
 import NavBar from '../UI/NavBar';
+import SearchForm from '../UI/SearchForm';
+import Gallery from '../UI/Gallery/Gallery';
 
-// header will contain the search form and the nav bar
-// main will be the bulk of the content(gallery component)
-const Layout = (props) => (
-        <Aux>
-            <header>
-                <SearchForm /> 
-                <NavBar 
-                    imageGenres={props.imageGenres} />
-            </header>
-            <main>
-                {props.children}
-            </main>
-        </Aux>
+const Layout = props => (
+    <Aux>
+        <header>
+            <SearchForm /> 
+            <NavBar imageGenres={props.imageGenres} />
+        </header>
+        <main>
+            <Gallery images={this.state.images}/>
+        </main>
+    </Aux>
 );
 
 export default Layout;
