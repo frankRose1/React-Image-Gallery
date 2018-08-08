@@ -1,9 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  }
+
 body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   color: #3f4850;
-  margin: 0;
-  padding: 0;
 }
 
 h2 {
@@ -21,6 +24,7 @@ a {
   text-decoration: none;
 }
 
+/* search form */
 .search-form {
   max-width: 460px;
   display: flex;
@@ -47,6 +51,7 @@ input {
   outline: none;
 }
 
+/* nav bar */
 .main-nav li {
   width: 100%;
   margin-bottom: 1em;
@@ -66,6 +71,7 @@ input {
   background-color: #275270;
 }
 
+/* gallery */
 .photo-container ul {
   display: flex;
   flex-flow: row wrap;
@@ -98,15 +104,40 @@ input {
 
 /* File not found */
 .page-not-found {
-  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/error.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.6)), url('/images/error.jpg') no-repeat center / cover;
   height: 100vh;
   color: #fff;
+  position: relative;
+}
+
+.error-message{
+  position: absolute;
+  top: 40%;
+  left: 25%;
+}
+
+.error-message h1{
+  font-size: 60px;
+}
+
+.error-message h2{
+  font-size: 45px;
+}
+
+.error-message a{
+  font-size: 25px;
+  color: #fff;
+  font-weight: bold;
+  border-bottom: 3px solid transparent;
+  transition: border-bottom 0.5s ease-in-out;
+}
+
+.error-message a:hover{
+  border-bottom: 3px solid #fff;
 }
 
 @media only screen and (max-width: 767px)  {
-  body {
+  .container {
     padding-top: 2em;
   }
 
@@ -116,7 +147,7 @@ input {
 }
 
 @media only screen and (min-width: 768px)  {
-  body {
+  .container {
     padding-top: 4em;
   }
 
