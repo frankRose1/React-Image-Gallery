@@ -2,7 +2,6 @@ import React from 'react';
 import Aux from '../../hoc/Auxiliary';
 import NavBar from '../UI/NavBar/NavBar';
 import SearchForm from '../UI/SearchForm';
-import Gallery from '../UI/Gallery/Gallery';
 
 const Layout = props => (
     <Aux>
@@ -11,7 +10,7 @@ const Layout = props => (
             <NavBar getImagesHandler={props.getImages}/>
         </header>
         <main>
-            <Gallery images={props.images}/>
+            {props.children}
         </main>
     </Aux>
 );
