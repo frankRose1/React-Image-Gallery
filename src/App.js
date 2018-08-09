@@ -5,6 +5,7 @@ import apiKey from './config';
 import Layout from './components/Layout/Layout';
 import Gallery from './components/UI/Gallery/Gallery';
 import NotFound from './components/UI/NotFound'; //404 file not found
+import Overlay from './components/UI/Overlay';
 
 class App extends Component {
 
@@ -44,7 +45,10 @@ class App extends Component {
                 <Route path="/:searchQuery" render={ () => <Gallery images={this.state.images} />} />
                 <Route component={NotFound} />
               </Switch> 
-            </Layout>  
+            </Layout>
+            <Overlay>
+              <div className="modal">This will be a modal</div>
+            </Overlay>
       </div>
     );
   }
