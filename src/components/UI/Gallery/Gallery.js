@@ -3,9 +3,9 @@ import GalleryItem from './GalleryItem';
 import NoResults from './NoResults';
 
 //generate the images from the state
+//if there are no results (length === 0) show the <NoResults />
 const Gallery = props => {
     let galleryJSX;
-    //if there are no results (length === 0) show the <NoResults />
     if (props.images.length === 0) {
         galleryJSX = <NoResults /> 
     } else {

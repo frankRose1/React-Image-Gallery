@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import axios from 'axios';
 import apiKey from './config';
 import Layout from './components/Layout/Layout';
@@ -29,7 +29,8 @@ class App extends Component {
       <div className="container">
             <Layout getImages={this.getImages}>
               <Switch>
-                <Route exact path="/" render={ () => <Gallery images={this.state.images} />} />
+                {/*Redirect to the first link when the home route is visited*/}
+                <Route exact path="/" render={ () => <Redirect to={'/space'}/>} />
                 <Route path="/space" render={ () => <Gallery images={this.state.images} />} />
                 <Route path="/hiking" render={ () => <Gallery images={this.state.images} />} />
                 <Route path="/puppies" render={ () => <Gallery images={this.state.images} />} />

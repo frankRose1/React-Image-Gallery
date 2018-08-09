@@ -6,7 +6,7 @@ import SearchForm from '../UI/SearchForm';
 const Layout = props => (
     <Aux>
         <header>
-            <SearchForm /> 
+            <SearchForm getImagesHandler={props.getImages}/> 
             <NavBar getImagesHandler={props.getImages}/>
         </header>
         <main>
