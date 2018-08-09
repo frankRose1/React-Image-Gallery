@@ -14,11 +14,13 @@ class App extends Component {
   }
 
   getImages = (genre = 'space') => {
+    this.setState({isLoading: true});
     const limit = 24;
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${genre}&per_page=${limit}&format=json&nojsoncallback=1`)
       .then(res => {
         this.setState({
-          images: res.data.photos.photo
+          images: res.data.photos.photo,
+          isLoading: false
         });
       })
       .catch(err => console.log(err));
@@ -31,7 +33,8 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-            <Layout getImages={this.getImages}>
+            <Layout getImages={this.getImages}
+                    isLoading={this.state.isLoading}>
               <Switch>
                 {/*Redirect to the first link when the home route is visited*/}
                 <Route exact path="/" render={ () => <Redirect to={'/space'}/>} />
