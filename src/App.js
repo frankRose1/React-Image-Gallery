@@ -13,7 +13,7 @@ class App extends Component {
     isLoading: false
   }
 
-  getImages = (genre) => {
+  getImages = (genre = 'space') => {
     const limit = 24;
     axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${genre}&per_page=${limit}&format=json&nojsoncallback=1`)
       .then(res => {
@@ -23,6 +23,10 @@ class App extends Component {
       })
       .catch(err => console.log(err));
   }
+
+  componentDidMount(){
+    this.getImages();
+  };
 
   render() {
     return (
@@ -34,6 +38,7 @@ class App extends Component {
                 <Route path="/space" render={ () => <Gallery images={this.state.images} />} />
                 <Route path="/hiking" render={ () => <Gallery images={this.state.images} />} />
                 <Route path="/puppies" render={ () => <Gallery images={this.state.images} />} />
+                <Route path="/:searchQuery" render={ () => <Gallery images={this.state.images} />} />
                 <Route component={NotFound} />
               </Switch> 
             </Layout>  
