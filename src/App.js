@@ -4,14 +4,20 @@ import axios from 'axios';
 import apiKey from './config';
 import Layout from './components/Layout/Layout';
 import Gallery from './components/UI/Gallery/Gallery';
+import Modal from './components/UI/Modal/Modal';
+import ModalImage from './components/UI/ModalImage/ModalImage';
 import NotFound from './components/UI/NotFound'; //404 file not found
-import Overlay from './components/UI/Overlay';
 
 class App extends Component {
 
   state = {
     images: [], //holds the response from the flickr API
-    isLoading: false
+    isLoading: false,
+    showModal: false,
+    modalImageInfo: {
+      imageLink: '',
+      imageDesc: ''
+    }
   }
 
   getImages = (genre = 'space') => {
@@ -27,6 +33,19 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
+  //when an image is clicked I want to show the image in the modal, otherwise hide the modal
+  showModalHandler = (imgLink, imgDesc) => {
+    //will need to get info about the image clicked such as img link and image description
+    //set state with that and it will be used in the ModalImage component
+    //also need to set state showModal to True
+    const updatedImageInfo = {
+      ...this.state.modalImageInfo,
+    }
+    updatedImageInfo.imageDesc = imgDesc;
+    updatedImageInfo.imageLink = imgLink;
+    this.setState({showModal: true, modalImageInfo: updatedImageInfo});
+  }
+
   componentDidMount(){
     this.getImages();
   };
@@ -39,16 +58,17 @@ class App extends Component {
               <Switch>
                 {/*Redirect to the first link when the home route is visited*/}
                 <Route exact path="/" render={ () => <Redirect to={'/space'}/>} />
-                <Route path="/space" render={ () => <Gallery images={this.state.images} />} />
+                <Route path="/space" render={ () => <Gallery images={this.state.images} showModalHandler={this.showModalHandler} />} />
                 <Route path="/hiking" render={ () => <Gallery images={this.state.images} />} />
                 <Route path="/puppies" render={ () => <Gallery images={this.state.images} />} />
                 <Route path="/:searchQuery" render={ () => <Gallery images={this.state.images} />} />
                 <Route component={NotFound} />
               </Switch> 
             </Layout>
-            <Overlay>
-              <div className="modal">This will be a modal</div>
-            </Overlay>
+            <Modal>
+              <ModalImage imageDesc={this.state.modalImageInfo.imageDesc}
+                          imageLink={this.state.modalImageInfo.imageLink}/>
+            </Modal>
       </div>
     );
   }

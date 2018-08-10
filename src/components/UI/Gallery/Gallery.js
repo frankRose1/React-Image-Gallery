@@ -3,8 +3,9 @@ import GalleryItem from './GalleryItem';
 import NoResults from './NoResults';
 
 //generate the images from the state
-//if there are no results (length === 0), show the <NoResults />
+//if there are no results (length === 0), show the <NoResults /> component
 const Gallery = props => {
+
     let galleryJSX;
     if (props.images.length === 0) {
         galleryJSX = <NoResults /> 
@@ -13,7 +14,8 @@ const Gallery = props => {
                         <GalleryItem 
                             key={img.id}
                             imageTitle={img.title}
-                            imageUrl={`https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}.jpg`}/>
+                            imageUrl={`https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}.jpg`}
+                            showModalHandler={props.showModalHandler}/>
         ))
     }
 
