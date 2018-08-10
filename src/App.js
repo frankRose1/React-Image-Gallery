@@ -65,7 +65,7 @@ class App extends Component {
                 <Route component={NotFound} />
               </Switch> 
             </Layout>
-            <Modal>
+            <Modal show={this.state.showModal}>
               <ModalImage imageDesc={this.state.modalImageInfo.imageDesc}
                           imageLink={this.state.modalImageInfo.imageLink}/>
             </Modal>

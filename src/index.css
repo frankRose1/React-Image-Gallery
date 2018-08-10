@@ -186,7 +186,14 @@ input {
   left: calc(50% -250px);
   top: 30%;
   box-sizing: border-box;
+  transform: translateY(0);
+  opacity: 1;
   transition: all 0.3s ease-out;
+}
+
+.modal-hide {
+  transform: translateY(-100vh);
+  opacity: 0;
 }
 
 @-webkit-keyframes load1 {
