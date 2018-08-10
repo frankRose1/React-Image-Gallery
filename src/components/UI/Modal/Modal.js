@@ -1,17 +1,24 @@
 import React from 'react';
+import Aux from '../../../hoc/Auxiliary';
+import Overlay from '../Overlay/Overlay';
 
-//the idea is to wrap an image with the modal and display it when an image is clicked
-const Modal = props => { 
+//import the overlay here because it is closely connected to the modal
+    //when the modal is shown/hidden, the overlay should be shown/hidden
+const Modal = props => {
     let modalClass;
     if (props.show) {
         modalClass = "modal";
     } else {
-        modalClass = "modal-hide";
+        modalClass = "modal hide";
     }
+
     return (
-        <div className={modalClass}>
-            {props.children}
-        </div>
+        <Aux>
+            <Overlay show={props.show} hideModalHandler={props.hideModalHandler}/>
+            <div className={modalClass}>
+                {props.children}
+            </div>
+        </Aux>
     );
 };
 
