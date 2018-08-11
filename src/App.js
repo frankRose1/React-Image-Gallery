@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import axios from 'axios';
 import apiKey from './config';
 import Layout from './components/Layout/Layout';
-import Gallery from './components/UI/Gallery/Gallery';
 import Modal from './components/UI/Modal/Modal';
 import ModalImage from './components/UI/ModalImage/ModalImage';
 import NotFound from './components/UI/NotFound'; //404 file not found
@@ -55,22 +54,16 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-            <Layout getImages={this.getImages}
-                    isLoading={this.state.isLoading}>
-              <Switch>
-                {/*Redirect to the first link when the home route is visited*/}
-                <Route exact path="/" render={ () => <Redirect to={'/space'}/>} />
-                <Route path="/astronomy" render={ () => <Gallery images={this.state.images} showModalHandler={this.showModalHandler} />} />
-                <Route path="/hiking" render={ () => <Gallery images={this.state.images} />} />
-                <Route path="/puppies" render={ () => <Gallery images={this.state.images} />} />
-                <Route path="/:searchQuery" render={ () => <Gallery images={this.state.images} />} />
-                <Route component={NotFound} />
-              </Switch> 
-            </Layout>
-            <Modal show={this.state.showModal} hideModalHandler={this.hideModalHandler}>
-              <ModalImage imageDesc={this.state.modalImageInfo.imageDesc}
-                          imageLink={this.state.modalImageInfo.imageLink}/>
-            </Modal>
+        <Modal show={this.state.showModal} hideModalHandler={this.hideModalHandler}>
+          <ModalImage imageDesc={this.state.modalImageInfo.imageDesc}
+                      imageLink={this.state.modalImageInfo.imageLink}/>
+        </Modal>
+        <Layout 
+            getImages={this.getImages}
+            isLoading={this.state.isLoading}
+            images={this.state.images}
+            showModalHandler={this.showModalHandler}/>
+
       </div>
     );
   }
