@@ -6,7 +6,7 @@ import Loading from '../Loading';
 //generate the images from the state
 //if there are no results (length === 0), show the <NoResults /> component
 //if the request is not yet resolved(props.isLoading), show the loading animation
-const Gallery = props => {
+const Gallery = (props) => {
 
     let galleryJSX;
     if (props.images.length === 0) {
@@ -21,11 +21,15 @@ const Gallery = props => {
         ))
     }
 
+    if (props.isLoading) {
+        return <Loading />;
+    }
+
     return (
         <div className="photo-container">
-            <h2>Results</h2>
+            <h2>{props.results || "Your Search Results"}</h2>
             <ul>
-                {props.isLoading ? <Loading /> : galleryJSX}
+                {galleryJSX}
             </ul>
         </div>
     );

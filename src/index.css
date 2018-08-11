@@ -73,20 +73,26 @@ input {
 
 /* gallery */
 .photo-container ul {
-  display: flex;
+  column-count: 4;
+  column-gap: 1em;
+  /* display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   -ms-align-items: flex-start;
-  align-items: flex-start;
+  align-items: flex-start; */
 }
 
-.photo-container ul li {
-  width: 220px;
-  height: 165px;
+.photo-container ul li:not(.not-found) {
+  background-color: #eee;
+  display: inline-block;
+  margin: 0 0 1em;
+  width: 100%;
   overflow: hidden;
   margin-bottom: 15px;
   border-radius: 5px;
   cursor: pointer;
+  /* width: 220px;
+  height: 165px; */
 }
 
 .photo-container ul img {
@@ -181,8 +187,11 @@ input {
   z-index: 500;
   background-color: white;
   width: 50%;
+  padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 1px #000;
+  max-height: 500px;
+  overflow: auto;
   padding: 16px;
   left: 50%;
   top: 50%;
@@ -192,19 +201,20 @@ input {
   transition: all 0.3s ease-out;
 }
 
+.modal.hide {
+  transform: translateY(-200%);
+  opacity: 0;
+}
+
 .modal h3{
   text-transform: capitalize;
-  margin: 25px 0;
+  margin-bottom: 25px;
   font-size: 45px;
 }
 
 .modal img {
-  border-radius: 5px
-}
-
-.modal.hide {
-  transform: translateY(-200%);
-  opacity: 0;
+  border-radius: 5px;
+  max-height: 75%;
 }
 
 .overlay {
