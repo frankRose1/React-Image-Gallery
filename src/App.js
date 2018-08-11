@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Switch, Route} from 'react-router-dom';
 import axios from 'axios';
 import apiKey from './config';
 import Layout from './components/Layout/Layout';

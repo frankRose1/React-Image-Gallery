@@ -1,9 +1,11 @@
 import React from 'react';
 import GalleryItem from './GalleryItem';
 import NoResults from './NoResults';
+import Loading from '../Loading';
 
 //generate the images from the state
 //if there are no results (length === 0), show the <NoResults /> component
+//if the request is not yet resolved(props.isLoading), show the loading animation
 const Gallery = props => {
 
     let galleryJSX;
@@ -23,7 +25,7 @@ const Gallery = props => {
         <div className="photo-container">
             <h2>Results</h2>
             <ul>
-                {galleryJSX}
+                {props.isLoading ? <Loading /> : galleryJSX}
             </ul>
         </div>
     );
