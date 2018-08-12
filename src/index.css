@@ -96,6 +96,26 @@ i.fa-camera-retro {
   font-size: 3.5em;
 }
 
+.home h1 {
+  margin-bottom: 45px;
+}
+
+.home p {
+  font-size: 25px;
+}
+
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sub-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 /* gallery */
 .photo-container ul {
   column-count: 4;
@@ -134,40 +154,6 @@ i.fa-camera-retro {
 
 .photo-container .not-found {
   width: 100%;
-}
-
-/* File not found */
-.page-not-found {
-  background: linear-gradient(rgba(0, 0, 0, 0.6),rgba(0, 0, 0, 0.6)), url('/images/error.jpg') no-repeat center / cover;
-  height: 100vh;
-  color: #fff;
-  position: relative;
-}
-
-.error-message{
-  position: absolute;
-  top: 40%;
-  left: 25%;
-}
-
-.error-message h1{
-  font-size: 60px;
-}
-
-.error-message h2{
-  font-size: 45px;
-}
-
-.error-message a{
-  font-size: 25px;
-  color: #fff;
-  font-weight: bold;
-  border-bottom: 3px solid transparent;
-  transition: border-bottom 0.5s ease-in-out;
-}
-
-.error-message a:hover{
-  border-bottom: 3px solid #fff;
 }
 
 /* LOADING ANIMATION */

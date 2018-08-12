@@ -4,7 +4,6 @@ import Aux from '../../hoc/Auxiliary';
 import NavBar from '../UI/NavBar/NavBar';
 import SearchForm from '../UI/SearchForm';
 import Gallery from '../UI/Gallery/Gallery';
-import NotFound from '../UI/NotFound';
 
 //TODO show the results title dynamically in gallery
 const Layout = props => {
@@ -23,7 +22,6 @@ const Layout = props => {
                         <Route path="/hiking" render={ () => <Gallery images={props.images} results='Hiking' isLoading={props.isLoading} showModalHandler={props.showModalHandler}/>} />
                         <Route path="/puppies" render={ () => <Gallery images={props.images} results='Puppies' isLoading={props.isLoading} showModalHandler={props.showModalHandler}/>} />
                         <Route path="/:searchQuery" render={ () => <Gallery images={props.images} isLoading={props.isLoading} showModalHandler={props.showModalHandler} />} />
-                        <Route component={NotFound} />
                     </Switch>
                 </main>
             </Aux>

@@ -1,6 +1,6 @@
 import React from 'react';
-import GalleryItem from './GalleryItem';
-import NoResults from './NoResults';
+import Images from './Images';
+import {NavLink, Route} from 'react-router-dom';
 import Loading from '../Loading';
 
 //generate the images from the state
@@ -8,28 +8,25 @@ import Loading from '../Loading';
 //if the request is not yet resolved(props.isLoading), show the loading animation
 const Gallery = (props) => {
 
-    let galleryJSX;
-    if (props.images.length === 0) {
-        galleryJSX = <NoResults /> 
-    } else {
-        galleryJSX = props.images.map(img => (
-                        <GalleryItem 
-                            key={img.id}
-                            imageTitle={img.title}
-                            imageUrl={`https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}.jpg`}
-                            showModalHandler={props.showModalHandler}/>
-        ))
-    }
-
     if (props.isLoading) {
         return <Loading />;
     }
 
     return (
         <div className="photo-container">
-            <h2>{props.results || "Your Search Results"}</h2>
+            <div className="gallery-header">
+                <h2>{props.results || "Your Search Results"}</h2>
+                <ul className="sub-nav">
+                    <li onClick={ () => props.getImagesHandler('astronomy')}><NavLink to="/gallery/astronomy">Astronomy</NavLink></li>
+                    <li onClick={ () => props.getImagesHandler('hiking')}><NavLink to="/gallery/hiking">Hiking</NavLink></li>
+                    <li onClick={ () => props.getImagesHandler('puppies')}><NavLink to="/gallery/puppies">Puppies</NavLink></li>
+                </ul>
+            </div>
             <ul>
-                {galleryJSX}
+                {/*routes to gallery images here Here */}
+                <Route path="/gallery/astronomy" render={ () => <Images images={props.images} showModalHandler={props.showModalHandler}/> }/>
+                <Route path="/gallery/hiking" render={ () => <Images images={props.images} showModalHandler={props.showModalHandler}/> }/>
+                <Route path="/gallery/puppies" render={ () => <Images images={props.images} showModalHandler={props.showModalHandler}/> }/>
             </ul>
         </div>
     );

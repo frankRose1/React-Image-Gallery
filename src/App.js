@@ -65,8 +65,12 @@ class App extends Component {
         <Header />
         {/* make nested routes inside of the gallery component and a nested nav bar*/}
         <Route exact path="/" component={Home} />
-        <Route path="/gallery" component={Gallery}/>
         <Route path="/search" component={Home}/>
+        <Route path="/gallery" render={ () => <Gallery 
+                                                images={this.state.images} 
+                                                isLoading={this.state.isLoading} 
+                                                showModalHandler={this.showModalHandler} 
+                                                getImagesHandler={this.getImages}/>}/>
         { /* <Layout 
             getImages={this.getImages}
             isLoading={this.state.isLoading}
