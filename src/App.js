@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import axios from 'axios';
 import apiKey from './config';
 // components
-import Modal from './components/UI/Modal/Modal';
-import ModalImage from './components/UI/ModalImage/ModalImage';
 import Header from './components/Layout/Header';
 import Home from './components/Layout/Home';
 import Gallery from './components/Layout/Gallery/Gallery';
 import SearchForm from './components/Layout/SearchForm';
+import Modal from './components/UI/Modal/Modal';
+import ModalImage from './components/UI/ModalImage/ModalImage';
+import FileNotFound from './components/UI/FileNotFound';
 
 class App extends Component {
 
@@ -62,20 +63,16 @@ class App extends Component {
                       imageLink={this.state.modalImageInfo.imageLink}/>
         </Modal>
         <Header />
-        {/* make nested routes inside of the gallery component and a nested nav bar*/}
-        <Route exact path="/" component={Home} />
-        <Route path="/search" component={ () => <SearchForm getImagesHandler={this.getImages}/> }/>
-        <Route path="/gallery" render={ () => <Gallery 
-                                                images={this.state.images} 
-                                                isLoading={this.state.isLoading} 
-                                                showModalHandler={this.showModalHandler} 
-                                                getImagesHandler={this.getImages}/>}/>
-        { /* <Layout 
-            getImages={this.getImages}
-            isLoading={this.state.isLoading}
-            images={this.state.images}
-        showModalHandler={this.showModalHandler}/> */}
-
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/search" component={ () => <SearchForm getImagesHandler={this.getImages}/> }/>
+          <Route path="/gallery" render={ () => <Gallery 
+                                                  images={this.state.images} 
+                                                  isLoading={this.state.isLoading} 
+                                                  showModalHandler={this.showModalHandler} 
+                                                  getImagesHandler={this.getImages}/>}/>
+          <Route component={FileNotFound} />
+        </Switch>
       </div>
     );
   }

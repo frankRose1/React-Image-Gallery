@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +7,7 @@
 
 body {
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: #414a4c;
   background-color: #eee;
 }
@@ -117,7 +119,7 @@ i.fa-camera-retro {
 }
 
 /* gallery */
-.photo-container ul {
+.photo-gallery {
   column-count: 4;
   column-gap: 1em;
   /* display: flex;
@@ -127,7 +129,7 @@ i.fa-camera-retro {
   align-items: flex-start; */
 }
 
-.photo-container ul li:not(.not-found) {
+.photo-gallery li:not(.not-found) {
   background-color: #eee;
   display: inline-block;
   margin: 0 0 1em;
@@ -140,19 +142,19 @@ i.fa-camera-retro {
   height: 165px; */
 }
 
-.photo-container li img {
+.photo-gallery li img {
   width: 100%;
   transform: scale(1.25);
   opacity: 1;
   transition: all 0.5s;
 }
 
-.photo-container li img:hover {
+.photo-gallery li img:hover {
   transform: scale(1.65);
   opacity: 0.4;
 }
 
-.photo-container .not-found {
+.photo-gallery .not-found {
   width: 100%;
 }
 
@@ -238,6 +240,26 @@ i.fa-camera-retro {
   left: 0;
   top: 0;
   background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* 404 message*/
+
+.file-not-found {
+  margin: 100px auto;
+  width: 70%;
+  text-align: center;
+}
+
+.file-not-found p { font-size: 25px;}
+.file-not-found i { color: tomato;}
+
+.err-message {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto 30px auto;
+  width: 40%;
+  font-size: 80px;
 }
 
 @-webkit-keyframes load1 {
