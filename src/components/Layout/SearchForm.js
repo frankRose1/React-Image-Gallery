@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'; //to get access to history
-import Button from './Button';
+import Button from '../UI/Button';
 
 class SearchForm extends Component {
     state = {
         searchInputValue: ''
     }
 
-    //when the cross icon in the input is clicked, clear the search input(done with binding)
+    //when the cross icon in the input is clicked, clear the search input
     updateInputValue = e => {
         this.setState({searchInputValue: e.target.value});
     }

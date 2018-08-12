@@ -1,10 +1,8 @@
 import React from 'react';
 import Images from './Images';
 import {NavLink, Route} from 'react-router-dom';
-import Loading from '../Loading';
+import Loading from '../../UI/Loading';
 
-//generate the images from the state
-//if there are no results (length === 0), show the <NoResults /> component
 //if the request is not yet resolved(props.isLoading), show the loading animation
 const Gallery = (props) => {
 
