@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import {Route} from 'react-router-dom';
 import axios from 'axios';
 import apiKey from './config';
+// components
 import Layout from './components/Layout/Layout';
 import Modal from './components/UI/Modal/Modal';
 import ModalImage from './components/UI/ModalImage/ModalImage';
-import NotFound from './components/UI/NotFound'; //404 file not found
+import Header from './components/Layout/Header';
+import Home from './components/Layout/Home';
+import Gallery from './components/UI/Gallery/Gallery';
+import ErrorBoundary from './hoc/ErrorBoundary';
 
 class App extends Component {
 
@@ -46,9 +51,9 @@ class App extends Component {
     this.setState({showModal: false});
   }
 
-  componentDidMount(){
-    this.getImages();
-  };
+  // componentDidMount(){
+  //   this.getImages();
+  // };
 
   render() {
     return (
@@ -57,11 +62,16 @@ class App extends Component {
           <ModalImage imageDesc={this.state.modalImageInfo.imageDesc}
                       imageLink={this.state.modalImageInfo.imageLink}/>
         </Modal>
-        <Layout 
+        <Header />
+        {/* make nested routes inside of the gallery component and a nested nav bar*/}
+        <Route exact path="/" component={Home} />
+        <Route path="/gallery" component={Gallery}/>
+        <Route path="/search" component={Home}/>
+        { /* <Layout 
             getImages={this.getImages}
             isLoading={this.state.isLoading}
             images={this.state.images}
-            showModalHandler={this.showModalHandler}/>
+        showModalHandler={this.showModalHandler}/> */}
 
       </div>
     );
