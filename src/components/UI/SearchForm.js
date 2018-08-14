@@ -7,7 +7,6 @@ class SearchForm extends Component {
         searchInputValue: ''
     }
 
-    //when the cross icon in the input is clicked, clear the search input
     updateInputValue = e => {
         this.setState({searchInputValue: e.target.value});
     }
@@ -15,11 +14,10 @@ class SearchForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
         const searchQuery = this.query.value;
-        const queryPath = `/${searchQuery}`;
+        const queryPath = `/search/${searchQuery}`;
         this.props.getImagesHandler(searchQuery);
-        e.currentTarget.reset();
-        // redirect the user to the new path
-        this.props.history.push(queryPath);
+        this.props.history.push(queryPath); // redirect the user to the new path
+        this.setState({searchInputValue: ''}); // clear the input
     }
 
     render () {

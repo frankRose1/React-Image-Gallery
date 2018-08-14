@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
-import {Route, Switch} from 'react-router-dom';
 import axios from 'axios';
 import apiKey from './config';
 // components
-import Header from './components/Layout/Header';
-import Home from './components/Layout/Home';
-import Gallery from './components/Layout/Gallery/Gallery';
-import SearchForm from './components/Layout/SearchForm';
+import Layout from './components/Layout/Layout';
 import Modal from './components/UI/Modal/Modal';
 import ModalImage from './components/UI/ModalImage/ModalImage';
-import FileNotFound from './components/UI/FileNotFound';
 
 class App extends Component {
 
   state = {
     images: [], //holds the response from the flickr API
+    results: '',
     isLoading: false,
     showModal: false,
     modalImageInfo: {
@@ -30,6 +26,7 @@ class App extends Component {
       .then(res => {
         this.setState({
           images: res.data.photos.photo,
+          results: genre,
           isLoading: false
         });
       })
@@ -51,9 +48,9 @@ class App extends Component {
     this.setState({showModal: false});
   }
 
-  // componentDidMount(){
-  //   this.getImages();
-  // };
+  componentDidMount(){
+    this.getImages();
+  };
 
   render() {
     return (
@@ -62,17 +59,11 @@ class App extends Component {
           <ModalImage imageDesc={this.state.modalImageInfo.imageDesc}
                       imageLink={this.state.modalImageInfo.imageLink}/>
         </Modal>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/search" component={ () => <SearchForm getImagesHandler={this.getImages}/> }/>
-          <Route path="/gallery" render={ () => <Gallery 
-                                                  images={this.state.images} 
-                                                  isLoading={this.state.isLoading} 
-                                                  showModalHandler={this.showModalHandler} 
-                                                  getImagesHandler={this.getImages}/>}/>
-          <Route component={FileNotFound} />
-        </Switch>
+        <Layout images={this.state.images} 
+                results={this.state.results}
+                isLoading={this.state.isLoading} 
+                showModalHandler={this.showModalHandler} 
+                getImagesHandler={this.getImages}/>
       </div>
     );
   }
