@@ -1,6 +1,15 @@
 # React Image Gallery
 Using Flickrs API and React to create an image gallery app.
 
+## Setting up your API Key
+* You will need a non-commercial API key from Flickr [here](https://www.flickr.com/services/apps/create/apply/)
+* Create a file called ```config.js``` on the root level of the ```src``` directory
+* config.js should look like this:
+  ```javascript
+    const apiKey = 'your key...';
+    export default apiKey; 
+  ```
+* I've already set up the import for the api key in App.js so you'll be good to go
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
