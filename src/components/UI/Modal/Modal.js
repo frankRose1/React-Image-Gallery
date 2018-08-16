@@ -1,6 +1,6 @@
 import React from 'react';
 import Aux from '../../../hoc/Auxiliary';
-import Overlay from '../Overlay/Overlay';
+import Overlay from './Overlay/Overlay';
 
 //import the overlay here because it is closely connected to the modal
     //when the modal is shown/hidden, the overlay should be shown/hidden

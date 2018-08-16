@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import {Switch, Route, Redirect} from 'react-router-dom'; 
 import axios from 'axios';
 import apiKey from './config';
 // components
 import Layout from './components/Layout/Layout';
+import Gallery from './components/UI/Gallery/Gallery';
+import SearchForm from './components/UI/SearchForm';
+import FileNotFound from './components/UI/FileNotFound';
 import Modal from './components/UI/Modal/Modal';
 import ModalImage from './components/UI/ModalImage/ModalImage';
 
@@ -59,11 +63,22 @@ class App extends Component {
           <ModalImage imageDesc={this.state.modalImageInfo.imageDesc}
                       imageLink={this.state.modalImageInfo.imageLink}/>
         </Modal>
-        <Layout images={this.state.images} 
-                results={this.state.results}
-                isLoading={this.state.isLoading} 
-                showModalHandler={this.showModalHandler} 
-                getImagesHandler={this.getImages}/>
+        <Layout>
+          <Switch>
+            <Route exact path="/" render={ () => <Redirect to="/gallery" />}/>
+            <Route path="/gallery" render={ () => <Gallery images={this.state.images} 
+                                                        results={this.state.results}
+                                                        isLoading={this.state.isLoading} 
+                                                        showModalHandler={this.showModalHandler} 
+                                                        getImagesHandler={this.getImages} />}/>
+            <Route path="/search" render={ () => <SearchForm images={this.state.images} 
+                                                            results={this.state.results}
+                                                            isLoading={this.state.isLoading} 
+                                                            showModalHandler={this.showModalHandler} 
+                                                            getImagesHandler={this.getImages}/> }/>
+            <Route component={FileNotFound} />
+          </Switch>
+        </Layout>
       </div>
     );
   }

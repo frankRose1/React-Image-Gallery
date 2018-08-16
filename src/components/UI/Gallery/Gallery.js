@@ -1,31 +1,27 @@
 import React from 'react';
 import Images from './Images';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
+import Aux from '../../../hoc/Auxiliary';
+import GalleryNav from '../Navigation/GalleryNav/GalleryNav';
 import FileNotFound from '../FileNotFound';
-import Loading from '../Loading';
 
-//if the request is not yet resolved(props.isLoading), show the loading animation
-//use path for Routes and url for Links
 const Gallery = (props) => {
-
-    if (props.isLoading) {
-        return <Loading />;
-    }
+    const {match} = props;
 
     return (
-        <div className="photo-container">
-            <h2>{props.results}</h2>
-                <Switch>
-                    {/*redirect to the first link when the page loads*/}
-                    {<Route exact path="/" render={() => <Redirect to="/astronomy" />} />}
-                    <Route path="/astronomy" render={ () => <Images images={props.images} showModalHandler={props.showModalHandler}/>} />
-                    <Route path="/hiking" render={ () => <Images images={props.images} showModalHandler={props.showModalHandler}/>} />
-                    <Route path="/puppies" render={ () => <Images images={props.images} showModalHandler={props.showModalHandler}/>} />
-                    <Route path="/search/:query" render={ () => <Images images={props.images} showModalHandler={props.showModalHandler}/>} />
-                    <Route component={FileNotFound} />
-                </Switch>
-        </div>
+        <Aux>
+            <GalleryNav getImagesHandler={props.getImagesHandler} url={match.url}/>
+            <Switch>
+                {/*redirect to the first link when gallery is visited*/}
+                <Route exact path={match.path} render={() => <Redirect to={`${match.path}/astronomy`} />} />
+                <Route path={`${match.path}/astronomy`} render={ () => <Images isLoading={props.isLoading} results={props.results} images={props.images} showModalHandler={props.showModalHandler}/>} />
+                <Route path={`${match.path}/hiking`} render={ () => <Images isLoading={props.isLoading} results={props.results} images={props.images} showModalHandler={props.showModalHandler}/>} />
+                <Route path={`${match.path}/puppies`} render={ () => <Images isLoading={props.isLoading} results={props.results} images={props.images} showModalHandler={props.showModalHandler}/>} />
+                <Route path="/search/:query" render={ () => <Images isLoading={props.isLoading} results={props.results} images={props.images} showModalHandler={props.showModalHandler}/>} />
+                <Route component={FileNotFound} />
+            </Switch>
+        </Aux>
     );
 };
 
-export default Gallery;
+export default withRouter(Gallery);

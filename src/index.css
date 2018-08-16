@@ -37,8 +37,10 @@ a {
 /* search form */
 .search-form {
   display: flex;
-  margin: 25px 0;
+  margin: 0 auto;
   width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
 }
 
 .search-form button {
@@ -65,25 +67,37 @@ input {
 header {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
 }
-.main-nav {width: 100%}
+
+.main-nav {
+  width: 100%;
+}
 
 .main-nav ul {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-}
-
-.main-nav li {
   width: 100%;
-  margin-bottom: 1em;
 }
 
-.main-nav a {
+.gallery-nav ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.main-nav li, .gallery-nav li {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.main-nav a, .gallery-nav a {
   font-size: .90em;
   font-weight: 700;
   color: #fff;
@@ -95,15 +109,21 @@ header {
   background: #38ACEC;
 }
 
-.main-nav .active,
-.main-nav a:hover,
+.gallery-nav a{
+  background: #0CB7ED;
+}
+
+.main-nav .active, .gallery-nav .active,
+.main-nav a:hover, .gallery-nav a:hover,
 .search-form button:hover {
   background-color: #438bbd;
 }
 
+
 i.fa-camera-retro {
   font-size: 3.5em;
   color: #38ACEC;
+  margin-bottom: 15px;
 }
 
 .home h1 {
@@ -115,7 +135,6 @@ i.fa-camera-retro {
 }
 
 /* GALLERY */
-
 .photo-gallery {
   column-count: 4;
   column-gap: 1em;
@@ -144,7 +163,8 @@ i.fa-camera-retro {
   opacity: 0.4;
 }
 
-.photo-gallery .not-found {
+.not-found {
+  margin-top: 150px;
   width: 100%;
 }
 
@@ -287,25 +307,31 @@ i.fa-camera-retro {
   }
 
   .main-nav {
-    width: auto;
+    max-width: 200px;
   }
 
-  header, .main-nav ul{
+  .gallery-nav ul {
+    max-width: 350px;
+  }
+
+  header, .main-nav ul, .gallery-nav ul{
     flex-direction: row;
   }
 
-  .search-form {
-    margin: 0;
-    width: auto;
+  .main-nav li {
+    margin-bottom: 0;
   }
 
-  .main-nav li {
-    width: auto;
-    margin-bottom: 0;
+  .main-nav a, .gallery-nav a {
+    display: inline-block;
   }
 
   .photo-container li {
     margin: auto;
+  }
+
+  i.fa-camera-retro {
+    margin-bottom: 0;
   }
 
   .modal {

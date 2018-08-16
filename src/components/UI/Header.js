@@ -1,14 +1,11 @@
 import React from 'react';
-import Icon from './Icon';
-import SearchForm from './SearchForm';
-import NavBar from './NavBar/NavBar';
+import MainNav from './Navigation/MainNav';
 
-const Header = props => {
+const Header = () => {
     return (
         <header>
-            <Icon />
-            <SearchForm getImagesHandler={props.getImagesHandler}/>
-            <NavBar getImagesHandler={props.getImagesHandler}/>
+            <i className="fas fa-camera-retro"></i>
+            <MainNav />
         </header>
     );
 };
