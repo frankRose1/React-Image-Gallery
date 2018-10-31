@@ -1,12 +1,13 @@
 # React Image Gallery
-Using Flickrs API and React to create an image gallery app.
+Built using Flickr's API, React, and React Router to create a fun image gallery app. Recently refactored to improve the routing and clean up the file structure. Most of the magic is happening inside of the ```Images``` component.
+Includes A 404 page, error pop up, search feature, and a masonry style layout.
 
-## Setting up your API Key
+## Setting up your API Key for Testing
 * You will need a non-commercial API key from Flickr [here](https://www.flickr.com/services/apps/create/apply/)
 * Create a file called ```config.js``` on the root level of the ```src``` directory
 * config.js should look like this:
   ```javascript
-    const apiKey = 'your key...';
+    const apiKey = 'your key';
     export default apiKey; 
   ```
 * I've already set up the import for the api key in App.js so you'll be good to go
