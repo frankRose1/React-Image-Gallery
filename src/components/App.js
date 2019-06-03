@@ -9,20 +9,18 @@ import Gallery from './Gallery';
 class App extends Component {
   render() {
     return (
-      <div className='container'>
-        <Layout>
-          <Switch>
-            <Route
-              exact
-              path='/'
-              render={props => <Redirect to='/gallery' {...props} />}
-            />
-            <Route path='/gallery' component={Gallery} />
-            <Route path='/search' component={Search} />
-            <Route component={NotFound} />
-          </Switch>
-        </Layout>
-      </div>
+      <Layout>
+        <Switch>
+          <Route
+            exact
+            path='/'
+            render={props => <Redirect to='/gallery' {...props} />}
+          />
+          <Route path='/gallery' component={Gallery} />
+          <Route path='/search' component={Search} />
+          <Route component={NotFound} />
+        </Switch>
+      </Layout>
     );
   }
 }

@@ -5,28 +5,37 @@ import apiKey from '../config';
 import axios from 'axios';
 import Loading from './Loading';
 import NoResults from './NoResults';
-import Modal from './Modal';
+import Typography from '@material-ui/core/Typography';
 import Image from './Image';
 import ErrorMessage from './ErrorMessage';
+import Pagination from './Pagination';
 // material UI refactor
 import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
+// import GridListTile from '@material-ui/core/GridListTile';
+// import GridListTileBar from '@material-ui/core/GridListTileBar';
+// import ListSubheader from '@material-ui/core/ListSubheader';
+// import IconButton from '@material-ui/core/IconButton';
+// import InfoIcon from '@material-ui/icons/Info';
+import Slide from '@material-ui/core/Slide';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
-const limit = 24; // number of results from flickr
+function Transition(props) {
+  return <Slide direction='down' {...props} />;
+}
 
 class Images extends Component {
   state = {
     images: [],
     loading: false,
     error: null,
-    showModal: false,
-    modalImage: {
+    showDialog: false,
+    dialogImage: {
       link: '',
-      title: ''
+      title: '',
+      index: null
     }
   };
 
@@ -40,25 +49,53 @@ class Images extends Component {
     }
   }
 
-  hideModalHandler = () => {
-    const updatedModalImg = { ...this.state.modalImage };
-    updatedModalImg.link = '';
-    updatedModalImg.title = '';
-    this.setState({ showModal: false, modalImage: updatedModalImg });
+  showDialogHandler = (link, title, index) => {
+    console.log('clicked');
+    const updatedDialogImage = { ...this.state.dialogImage };
+    updatedDialogImage.link = link;
+    updatedDialogImage.title = title;
+    updatedDialogImage.index = index;
+    this.setState({ showDialog: true, dialogImage: updatedDialogImage });
   };
 
-  showModalHandler = (link, title) => {
-    const updatedModalImg = { ...this.state.modalImage };
-    updatedModalImg.link = link;
-    updatedModalImg.title = title;
-    this.setState({ showModal: true, modalImage: updatedModalImg });
+  hideDialogHandler = () => {
+    const updatedDialogImage = { ...this.state.dialogImage };
+    updatedDialogImage.link = '';
+    updatedDialogImage.title = '';
+    updatedDialogImage.index = null;
+    this.setState({ showDialog: false, dialogImage: updatedDialogImage });
+  };
+
+  createImageLink = (farm, server, id, secret) =>
+    `https://farm${farm}.staticflickr.com/${server}/${id}_${secret}.jpg`;
+
+  pageImagesHandler = (currentIndex, direction) => {
+    let newDialogImageIndex;
+    if (direction === 'prev') {
+      newDialogImageIndex = currentIndex - 1;
+    } else if (direction === 'next') {
+      newDialogImageIndex = currentIndex + 1;
+    }
+    const image = this.state.images[newDialogImageIndex];
+    this.setState({
+      dialogImage: {
+        index: newDialogImageIndex,
+        title: image.title,
+        link: this.createImageLink(
+          image.farm,
+          image.server,
+          image.id,
+          image.secret
+        )
+      }
+    });
   };
 
   makeRandomCol = () => Math.floor(Math.random() * 2) + 1;
 
   fetchImages = query => {
     this.setState({ loading: true });
-    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=${limit}&format=json&nojsoncallback=1`;
+    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=${24}&format=json&nojsoncallback=1`;
     axios
       .get(url)
       .then(res => {
@@ -92,7 +129,7 @@ class Images extends Component {
 
   render() {
     const { searchQuery, classes } = this.props;
-    const { images, loading, error, showModal, modalImage } = this.state;
+    const { images, loading, error, showDialog, dialogImage } = this.state;
 
     if (loading) {
       return <Loading />;
@@ -103,41 +140,51 @@ class Images extends Component {
     } else {
       return (
         <div className='photo-container'>
-          <Modal
-            imgLink={modalImage.link}
-            imgTitle={modalImage.title}
-            hideModalHandler={this.hideModalHandler}
-            show={showModal}
-          />
-
-          <h2>{searchQuery}</h2>
+          <h1
+            style={{
+              fontSize: '2em',
+              margin: '52px 0 40px',
+              textTransform: 'capitalize'
+            }}
+          >
+            {searchQuery}
+          </h1>
           <div className={classes.root}>
             <GridList cellHeight={180} cols={3} className={classes.gridList}>
-              {/* TODO: maybe remove the title?? */}
-              {/* <GridListTile key='Subheader' cols={2} style={{ height: 'auto' }}>
-                <ListSubheader component='h2'>{searchQuery}</ListSubheader>
-              </GridListTile> */}
-              {images.map(image => (
-                <GridListTile key={image.id} cols={image.col}>
-                  <img
-                    src={`https://farm${image.farm}.staticflickr.com/${
-                      image.server
-                    }/${image.id}_${image.secret}.jpg`}
-                    alt={image.title}
-                  />
-                  <GridListTileBar
-                    title={image.title}
-                    subtitle={<span>by: {image.owner} </span>}
-                    actionIcon={
-                      <IconButton className={classes.icon}>
-                        <InfoIcon />
-                      </IconButton>
-                    }
-                  />
-                </GridListTile>
+              {images.map((image, i) => (
+                <Image
+                  key={image.id}
+                  owner={image.owner}
+                  imgLink={this.createImageLink(
+                    image.farm,
+                    image.server,
+                    image.id,
+                    image.secret
+                  )}
+                  imgTitle={image.title}
+                  colSpan={image.col}
+                  index={i}
+                  showDialogHandler={this.showDialogHandler}
+                />
               ))}
             </GridList>
           </div>
+
+          <Dialog
+            TransitionComponent={Transition}
+            open={showDialog}
+            onBackdropClick={this.hideDialogHandler}
+          >
+            <DialogTitle>{dialogImage.title}</DialogTitle>
+            <DialogContent>
+              <img src={dialogImage.link} alt={dialogImage.title} />
+              <Pagination
+                imageIndex={dialogImage.index}
+                pageImages={this.pageImagesHandler}
+                numResults={images.length}
+              />
+            </DialogContent>
+          </Dialog>
         </div>
       );
     }
@@ -152,12 +199,8 @@ const styles = theme => ({
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper
   },
-  // gridList: {
-  //   width: 500,
-  //   height: 450
-  // },
-  icon: {
-    color: 'rgba(255, 255, 255, 0.54)'
+  gridList: {
+    maxWidth: '1200px'
   }
 });
 
@@ -167,15 +210,23 @@ Images.propTypes = {
 
 export default withStyles(styles)(Images);
 
-/**
- * Original Images List
- *           <ul className="photo-gallery">
-            {images.map( img => (
-              <Image
-                key={img.id}
-                imgTitle={img.title}
-                imgLink={`https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}.jpg`}
-                showModalHandler={this.showModalHandler}/>
-            ))}
-          </ul>
- */
+// <GridListTile key={image.id} cols={image.col}>
+//   <img
+//     src={`https://farm${image.farm}.staticflickr.com/${
+//       image.server
+//     }/${image.id}_${image.secret}.jpg`}
+//     alt={image.title}
+//   />
+//   <GridListTileBar
+//     title={image.title}
+//     subtitle={<span>by: {image.owner} </span>}
+//     actionIcon={
+//       <IconButton
+//         className={classes.icon}
+//         onClick={this.showDialogHandler}
+//       >
+//         <InfoIcon />
+//       </IconButton>
+//     }
+//   />
+// </GridListTile>

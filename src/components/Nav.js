@@ -18,13 +18,21 @@ const useStyles = makeStyles(theme => ({
   cameraIcon: {
     flexGrow: 1,
     display: 'flex',
-    alignSelf: 'flexStart'
+    alignSelf: 'flexStart',
+    color: 'white'
   },
   toolBar: {
     width: '90%'
   },
   navLinks: {
     display: 'flex'
+  },
+  navLinkIcon: {
+    display: 'none',
+    color: 'white',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block'
+    }
   }
 }));
 
@@ -51,7 +59,7 @@ const Nav = () => {
         <List className={classes.navLinks}>
           {navLinks.map(link => (
             <ListItemLink key={link.text} to={link.to}>
-              <ListItemIcon>
+              <ListItemIcon className={classes.navLinkIcon}>
                 <link.Icon />
               </ListItemIcon>
               <ListItemText primary={link.text} />
