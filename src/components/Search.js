@@ -33,7 +33,11 @@ class Search extends Component {
     return (
       <>
         <form className={classes.root} onSubmit={this.handleSubmit}>
-          <Button type='submit' className={classes.searchIcon}>
+          <Button
+            disabled={search.trim().length === 0}
+            type='submit'
+            className={classes.searchIcon}
+          >
             <SearchIcon />
           </Button>
           <InputBase
@@ -63,10 +67,16 @@ const styles = theme => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     margin: '0 auto',
-    width: '60%',
+    width: '85%',
     backgroundColor: fade(theme.palette.primary.dark, 0.15),
     '&:hover': {
       backgroundColor: fade(theme.palette.primary.dark, 0.25)
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '65%'
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '35%'
     }
   },
   searchIcon: {

@@ -5,17 +5,13 @@ import apiKey from '../config';
 import axios from 'axios';
 import Loading from './Loading';
 import NoResults from './NoResults';
-import Typography from '@material-ui/core/Typography';
-import Image from './Image';
 import ErrorMessage from './ErrorMessage';
 import Pagination from './Pagination';
-// material UI refactor
 import GridList from '@material-ui/core/GridList';
-// import GridListTile from '@material-ui/core/GridListTile';
-// import GridListTileBar from '@material-ui/core/GridListTileBar';
-// import ListSubheader from '@material-ui/core/ListSubheader';
-// import IconButton from '@material-ui/core/IconButton';
-// import InfoIcon from '@material-ui/icons/Info';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -35,7 +31,8 @@ class Images extends Component {
     dialogImage: {
       link: '',
       title: '',
-      index: null
+      index: 0,
+      views: 0
     }
   };
 
@@ -49,12 +46,12 @@ class Images extends Component {
     }
   }
 
-  showDialogHandler = (link, title, index) => {
-    console.log('clicked');
+  showDialogHandler = (link, title, index, views) => {
     const updatedDialogImage = { ...this.state.dialogImage };
     updatedDialogImage.link = link;
     updatedDialogImage.title = title;
     updatedDialogImage.index = index;
+    updatedDialogImage.views = views;
     this.setState({ showDialog: true, dialogImage: updatedDialogImage });
   };
 
@@ -62,7 +59,8 @@ class Images extends Component {
     const updatedDialogImage = { ...this.state.dialogImage };
     updatedDialogImage.link = '';
     updatedDialogImage.title = '';
-    updatedDialogImage.index = null;
+    updatedDialogImage.index = 0;
+    updatedDialogImage.views = 0;
     this.setState({ showDialog: false, dialogImage: updatedDialogImage });
   };
 
@@ -86,7 +84,8 @@ class Images extends Component {
           image.server,
           image.id,
           image.secret
-        )
+        ),
+        views: image.views
       }
     });
   };
@@ -95,7 +94,7 @@ class Images extends Component {
 
   fetchImages = query => {
     this.setState({ loading: true });
-    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=${24}&format=json&nojsoncallback=1`;
+    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=${24}&extras=owner_name,views&format=json&nojsoncallback=1`;
     axios
       .get(url)
       .then(res => {
@@ -139,7 +138,7 @@ class Images extends Component {
       return <ErrorMessage error={error} />;
     } else {
       return (
-        <div className='photo-container'>
+        <div>
           <h1
             style={{
               fontSize: '2em',
@@ -151,22 +150,50 @@ class Images extends Component {
           </h1>
           <div className={classes.root}>
             <GridList cellHeight={180} cols={3} className={classes.gridList}>
-              {images.map((image, i) => (
-                <Image
-                  key={image.id}
-                  owner={image.owner}
-                  imgLink={this.createImageLink(
-                    image.farm,
-                    image.server,
-                    image.id,
-                    image.secret
-                  )}
-                  imgTitle={image.title}
-                  colSpan={image.col}
-                  index={i}
-                  showDialogHandler={this.showDialogHandler}
-                />
-              ))}
+              {images.map((image, idx) => {
+                const imgLink = this.createImageLink(
+                  image.farm,
+                  image.server,
+                  image.id,
+                  image.secret
+                );
+                return (
+                  <GridListTile key={image.id} cols={image.col}>
+                    <img
+                      className={classes.img}
+                      src={imgLink}
+                      alt={image.title}
+                      onClick={() =>
+                        this.showDialogHandler(
+                          imgLink,
+                          image.title,
+                          idx,
+                          image.views
+                        )
+                      }
+                    />
+                    <GridListTileBar
+                      title={image.title}
+                      subtitle={<span>by: {image.ownername} </span>}
+                      actionIcon={
+                        <IconButton
+                          className={classes.icon}
+                          onClick={() =>
+                            this.showDialogHandler(
+                              imgLink,
+                              image.title,
+                              idx,
+                              image.views
+                            )
+                          }
+                        >
+                          <InfoIcon />
+                        </IconButton>
+                      }
+                    />
+                  </GridListTile>
+                );
+              })}
             </GridList>
           </div>
 
@@ -178,6 +205,10 @@ class Images extends Component {
             <DialogTitle>{dialogImage.title}</DialogTitle>
             <DialogContent>
               <img src={dialogImage.link} alt={dialogImage.title} />
+              <DialogContentText>
+                {dialogImage.views} view{dialogImage.views === 1 ? '' : 's'} on
+                Flickr
+              </DialogContentText>
               <Pagination
                 imageIndex={dialogImage.index}
                 pageImages={this.pageImagesHandler}
@@ -201,6 +232,12 @@ const styles = theme => ({
   },
   gridList: {
     maxWidth: '1200px'
+  },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)'
+  },
+  img: {
+    cursor: 'pointer'
   }
 });
 
@@ -209,24 +246,3 @@ Images.propTypes = {
 };
 
 export default withStyles(styles)(Images);
-
-// <GridListTile key={image.id} cols={image.col}>
-//   <img
-//     src={`https://farm${image.farm}.staticflickr.com/${
-//       image.server
-//     }/${image.id}_${image.secret}.jpg`}
-//     alt={image.title}
-//   />
-//   <GridListTileBar
-//     title={image.title}
-//     subtitle={<span>by: {image.owner} </span>}
-//     actionIcon={
-//       <IconButton
-//         className={classes.icon}
-//         onClick={this.showDialogHandler}
-//       >
-//         <InfoIcon />
-//       </IconButton>
-//     }
-//   />
-// </GridListTile>

@@ -6,7 +6,7 @@ const Layout = props => (
     <header>
       <Nav />
     </header>
-    <main>{props.children}</main>
+    <main style={{ marginTop: '100px' }}>{props.children}</main>
   </>
 );
 

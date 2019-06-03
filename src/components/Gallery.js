@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, Switch, Route, Redirect } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Images from './Images';
 
 class Gallery extends Component {
@@ -18,16 +17,13 @@ class Gallery extends Component {
       <>
         <nav className={classes.galleryNav}>
           {links.map(link => (
-            <Button
-              className={classes.button}
-              variant='contained'
-              color='primary'
+            <NavLink
+              className={classes.navLi}
               key={link.text}
+              to={`${url}${link.path}`}
             >
-              <NavLink className={classes.navLink} to={`${url}${link.path}`}>
-                {link.text}
-              </NavLink>
-            </Button>
+              {link.text}
+            </NavLink>
           ))}
         </nav>
         <Switch>
@@ -56,18 +52,24 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       flexDirection: 'row',
       maxWidth: '350px'
+    },
+    '& .active': {
+      backgroundColor: '#438bbd'
     }
   },
-  button: {
-    marginBottom: '20px',
-    [theme.breakpoints.up('sm')]: {
-      marginBottom: '0'
-    }
-  },
-  navLink: {
-    color: 'white',
+  navLi: {
+    fontSize: '.90em',
+    fontWeight: 700,
+    color: '#fff',
     textTransform: 'capitalize',
-    fontWeight: 'bold'
+    display: 'block',
+    padding: '0.8em',
+    transition: 'all 0.5s ease-in-out',
+    borderRadius: '3px',
+    background: '#38ACEC',
+    '&:hover': {
+      backgroundColor: '#438bbd'
+    }
   }
 });
 
